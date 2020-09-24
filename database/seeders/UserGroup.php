@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserGroup extends Seeder
 {
@@ -34,7 +35,7 @@ class UserGroup extends Seeder
 
         foreach ($groups as $group) {
             $check = null;
-            $check = DB::table('user_groups')->where('name', $group['name'])->first();
+            $check = DB::table('user_groups')->where('role', $group['role'])->first();
             if ($check === null) {
                 $group['created_at'] = now();
                 $group['updated_at'] = now();
