@@ -6,7 +6,9 @@ use App\Http\Controllers\API\APIController;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class ArticleController extends APIController
 {
@@ -31,6 +33,22 @@ class ArticleController extends APIController
     public function add(): JsonResponse
     {
         $data = $this->request->only(['title','must','is_active','content']);
+
+        $validator = Validator::make($data,[
+           'title' => 'required|string|min:3|max:300',
+           'must' => 'nullable|numeric',
+           'is_active' => 'nullable',
+           'content' => 'required',
+           'file' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
+
+        ]);
+
+        if ($validator->fails()){
+            return $this->error([
+                'msg' => 'Hatalı alan',
+                'errors' => $validator->errors(),
+            ],400);
+        }
 
         $article = new Article();
         $article->title = $data['title'];
@@ -58,7 +76,20 @@ class ArticleController extends APIController
     {
         $data = $this->request->all();
 
+        $validator = Validator::make($data,[
+            'title' => 'string|min:3|max:300',
+            'must' => 'nullable|numeric',
+            'is_active' => 'nullable',
+            'file' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
 
+        ]);
+
+        if ($validator->fails()){
+            return $this->error([
+                'msg' => 'Hatalı alan',
+                'errors' => $validator->errors(),
+            ],400);
+        }
 
 
 

@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends APIController
 {
@@ -30,8 +31,21 @@ class TagController extends APIController
 
     public function add(Request $request): JsonResponse
     {
+        $data = $this->request->only('title');
+
+        $validator = Validator::make($data, [
+            'title' => 'required|string|min:2|max:100'
+            ]);
+
+        if ($validator->fails()){
+            return $this->error([
+                'msg' => 'Hatalı alan',
+                'errors' => $validator->errors(),
+            ],400);
+        }
+
         $tag = new Tag();
-        $tag->title = $request->title;
+        $tag->title = $data['title'];
         $tag->save();
 
         return $this->success([
@@ -42,9 +56,21 @@ class TagController extends APIController
 
     public function update(int $tag_id, Request $request): JsonResponse
     {
+        $data = $this->request->only('title');
+
+        $validator = Validator::make($data, [
+            'title' => 'string|min:2|max:100'
+        ]);
+
+        if ($validator->fails()){
+            return $this->error([
+                'msg' => 'Hatalı alan',
+                'errors' => $validator->errors(),
+            ],400);
+        }
+
         $tag = Tag::find($tag_id);
-        $tag->title = $request->title;
-        $tag->save();
+        $tag->update($data);
 
         return $this->success([
             'data' => $tag

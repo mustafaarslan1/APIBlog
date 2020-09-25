@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends APIController
 {
@@ -32,8 +33,21 @@ class CategoryController extends APIController
 
     public function add(Request $request): JsonResponse
     {
+        $data = $this->request->only('title');
+
+        $validator = Validator::make($data, [
+            'title' => 'required|string|min:2|max:100|unique:categories,title'
+        ]);
+
+        if ($validator->fails()){
+            return $this->error([
+                'msg' => 'Hatalı alan',
+                'errors' => $validator->errors(),
+            ],400);
+        }
+
         $category = new Category();
-        $category->title = $request->title;
+        $category->title = $data['title'];
         $category->save();
 
         return $this->success([
@@ -44,9 +58,21 @@ class CategoryController extends APIController
 
     public function update(int $category_id, Request $request): JsonResponse
     {
+        $data = $this->request->only('title');
+
+        $validator = Validator::make($data, [
+            'title' => 'required|string|min:2|max:100|unique:categories,title'
+        ]);
+
+        if ($validator->fails()){
+            return $this->error([
+                'msg' => 'Hatalı alan',
+                'errors' => $validator->errors(),
+            ],400);
+        }
+
         $category = Category::find($category_id);
-        $category->title = $request->title;
-        $category->save();
+        $category->update($data);
 
         return $this->success([
             'data' => $category

@@ -19,4 +19,8 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\ArticleCategory');
     }
+
+    protected $fillable = [
+        'title'
+    ];
 }

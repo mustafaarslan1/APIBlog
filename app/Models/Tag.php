@@ -13,4 +13,8 @@ class Tag extends Model
     {
         return $this->hasMany('App\Models\ArticleTag');
     }
+
+    protected $fillable = [
+        'title'
+    ];
 }
