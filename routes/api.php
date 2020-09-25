@@ -43,4 +43,14 @@ Route::namespace('App\Http\Controllers')->group(function (){
     });
 });
 
+Route::namespace('App\Http\Controllers')->group(function (){
+    Route::prefix('tags')->group(function (){
+        Route::get('/', 'TagController@index');
+        Route::get('/{tagid}', 'TagController@detail');
+        Route::post('/add', 'TagController@add');
+        Route::put('/{tagid}', 'TagController@update');
+        Route::delete('/{tagid}', 'TagController@delete');
+    });
+});
+
 
