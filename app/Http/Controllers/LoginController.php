@@ -25,12 +25,15 @@ class LoginController extends APIController
     {
         $request->validate([
             'name' => 'required|string',
+            'surname' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ]);
         $user = new User([
             'name' => $request->name,
+            'surname' => $request->surname,
             'email' => $request->email,
+            'group_id' => 1,
             'password' => bcrypt($request->password)
         ]);
         $user->save();

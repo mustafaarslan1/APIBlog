@@ -32,3 +32,15 @@ Route::group([
         Route::get('user', 'App\Http\Controllers\API\LoginController@user');
     });
 });
+
+Route::namespace('App\Http\Controllers')->group(function (){
+    Route::prefix('categories')->group(function (){
+        Route::get('/', 'CategoryController@index');
+        Route::get('/{categoryid}', 'CategoryController@detail');
+        Route::post('/add', 'CategoryController@add');
+        Route::put('/{categoryid}', 'CategoryController@update');
+        Route::delete('/{categoryid}', 'CategoryController@delete');
+    });
+});
+
+

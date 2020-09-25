@@ -20,6 +20,8 @@ class CreateArticlesTable extends Migration
             $table->string('file')->nullable();
             $table->integer('must');
             $table->text('content');
+            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('is_active',['0','1'])->default(1);
             $table->timestamps();
         });
