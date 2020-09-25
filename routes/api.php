@@ -53,4 +53,14 @@ Route::namespace('App\Http\Controllers')->group(function (){
     });
 });
 
+Route::namespace('App\Http\Controllers')->group(function (){
+    Route::prefix('articles')->group(function (){
+        Route::get('/', 'ArticleController@index');
+        Route::get('/{tagid}', 'ArticleController@detail');
+        Route::post('/add', 'ArticleController@add');
+        Route::put('/{tagid}', 'ArticleController@update');
+        Route::delete('/{tagid}', 'ArticleController@delete');
+    });
+});
+
 
