@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,9 +21,10 @@ class ArticleController extends APIController
 
     public function index(Request $request): JsonResponse
     {
-        $data = Article::all();
 
-        //Resourcedan geçirilecek
+        $data = Article::with(['tags','users','categories'])->get();
+
+        $data = ArticleResource::collection($data);
 
         return $this->success([
             'data' => $data
