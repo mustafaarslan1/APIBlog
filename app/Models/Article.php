@@ -14,14 +14,14 @@ class Article extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-    public function categories(): \Illuminate\Database\Eloquent\Relations\hasMany
+    public function categories(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
-        return $this->hasMany('App\Models\ArticleCategory');
+        return $this->belongsToMany('App\Models\Category', 'article_categories', 'article_id','category_id');
     }
 
-    public function tags(): \Illuminate\Database\Eloquent\Relations\hasMany
+    public function tags(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
-        return $this->hasMany('App\Models\ArticleTag');
+        return $this->belongsToMany('App\Models\Tag', 'article_tags', 'article_id','tag_id');
     }
 
     protected $fillable = [

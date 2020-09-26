@@ -60,6 +60,10 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::post('/add', 'ArticleController@add');
         Route::put('/{tagid}', 'ArticleController@update');
         Route::delete('/{tagid}', 'ArticleController@delete');
+        Route::post('/addTag', 'ArticleController@addTag');
+        Route::delete('/deleteTag/{articletagid}', 'ArticleController@deleteTag');
+        Route::post('/addCategory', 'ArticleController@addCategory');
+        Route::delete('/deleteCategory/{articlecategoryid}', 'ArticleController@deleteCategory');
     });
 });
 
