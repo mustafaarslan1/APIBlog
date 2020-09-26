@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Resources\CategoryResource;
+use App\Models\ArticleTag;
 use App\Models\Category;
+use App\Models\CategoryTag;
+use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +24,7 @@ class CategoryController extends APIController
 
     public function index(Request $request): JsonResponse
     {
-        $data = Category::with('tags')->withCount('articles')->get();
+        $data = Category::with(['tags','articles'])->withCount('articles')->get();
 
         $data = CategoryResource::collection($data);
 
@@ -49,6 +52,24 @@ class CategoryController extends APIController
         $category = new Category();
         $category->title = $data['title'];
         $category->save();
+
+        if (isset($data['tags'])){
+            foreach ($data['tags'] as $t) {
+                $find = Tag::where('title',$t)->first();
+                if ($find){
+                    $tag = Tag::find($find->id);
+                }else{
+                    $tag = new Tag();
+                }
+                $tag->title = $t;
+                $tag->save();
+
+                $add_tag_to_category = new CategoryTag();
+                $add_tag_to_category->category_id = $category->id;
+                $add_tag_to_category->tag_id = $tag->id;
+                $add_tag_to_category->save();
+            }
+        }
 
         return $this->success([
             'data' => $category
@@ -101,11 +122,37 @@ class CategoryController extends APIController
 
     public function addTag()
     {
+        $data = $this->request->all();
+        foreach ($data['tags'] as $t) {
+            $find = Tag::where('title', $t)->first();
+            if ($find){
+                $tag = Tag::find($find->id);
+            }else{
+                $tag = new Tag();
+            }
+            $tag->title = $t;
+            $tag->save();
 
+            $add_tag_to_category = new CategoryTag();
+            $add_tag_to_category->category_id = $data['category_id'];
+            $add_tag_to_category->tag_id = $tag->id;
+            $add_tag_to_category->save();
+        }
+
+        return $this->success([
+            'data' => $data
+        ]);
     }
 
-    public function deleteTag()
+    public function deleteTag($category_tag_id)
     {
+        $deleteTag = CategoryTag::find($category_tag_id);
+        $deleteTag->delete();
 
+        $data = Tag::find($deleteTag->tag_id);
+
+        return $this->success([
+            'data' => $data
+        ]);
     }
 }

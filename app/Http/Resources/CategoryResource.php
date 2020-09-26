@@ -19,6 +19,7 @@ class CategoryResource extends JsonResource
             "kategori adı" => $this->title,
             "tags" => $this->tags,
             "bu kategoriye ait makale sayısı" => $this->articles_count,
+            "articles" => $this->articles
         ];
     }
 }

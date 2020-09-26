@@ -36,34 +36,36 @@ Route::group([
 Route::namespace('App\Http\Controllers')->group(function (){
     Route::prefix('categories')->group(function (){
         Route::get('/', 'CategoryController@index');
-        Route::get('/{categoryid}', 'CategoryController@detail');
+        Route::get('/{category-id}', 'CategoryController@detail');
         Route::post('/add', 'CategoryController@add');
-        Route::put('/{categoryid}', 'CategoryController@update');
-        Route::delete('/{categoryid}', 'CategoryController@delete');
+        Route::put('/{category-id}', 'CategoryController@update');
+        Route::delete('/{category-id}', 'CategoryController@delete');
+        Route::post('/add-tag', 'CategoryController@addTag');
+        Route::delete('/delete-tag/{category-tag-id}', 'CategoryController@deleteTag');
     });
 });
 
 Route::namespace('App\Http\Controllers')->group(function (){
     Route::prefix('tags')->group(function (){
         Route::get('/', 'TagController@index');
-        Route::get('/{tagid}', 'TagController@detail');
+        Route::get('/{tag-id}', 'TagController@detail');
         Route::post('/add', 'TagController@add');
-        Route::put('/{tagid}', 'TagController@update');
-        Route::delete('/{tagid}', 'TagController@delete');
+        Route::put('/{tag-id}', 'TagController@update');
+        Route::delete('/{tag-id}', 'TagController@delete');
     });
 });
 
 Route::namespace('App\Http\Controllers')->group(function (){
     Route::prefix('articles')->group(function (){
         Route::get('/', 'ArticleController@index');
-        Route::get('/{tagid}', 'ArticleController@detail');
+        Route::get('/{article-id}', 'ArticleController@detail');
         Route::post('/add', 'ArticleController@add');
-        Route::put('/{tagid}', 'ArticleController@update');
-        Route::delete('/{tagid}', 'ArticleController@delete');
-        Route::post('/addTag', 'ArticleController@addTag');
-        Route::delete('/deleteTag/{articletagid}', 'ArticleController@deleteTag');
-        Route::post('/addCategory', 'ArticleController@addCategory');
-        Route::delete('/deleteCategory/{articlecategoryid}', 'ArticleController@deleteCategory');
+        Route::put('/{article-id}', 'ArticleController@update');
+        Route::delete('/{article-id}', 'ArticleController@delete');
+        Route::post('/add-tag', 'ArticleController@addTag');
+        Route::delete('/delete-tag/{article-tag-id}', 'ArticleController@deleteTag');
+        Route::post('/add-category', 'ArticleController@addCategory');
+        Route::delete('/delete-category/{article-category-id}', 'ArticleController@deleteCategory');
     });
 });
 
