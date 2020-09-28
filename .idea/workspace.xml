@@ -148,7 +148,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lastsis" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -169,7 +169,8 @@
       <option name="presentableId" value="Default" />
       <updated>1600934391787</updated>
       <workItem from="1600934393480" duration="814000" />
-      <workItem from="1600935401791" duration="86636000" />
+      <workItem from="1600935401791" duration="87235000" />
+      <workItem from="1601285154848" duration="618000" />
     </task>
     <servers />
   </component>

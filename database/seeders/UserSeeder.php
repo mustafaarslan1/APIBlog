@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class UserSeeder extends Seeder
            'name' => 'mustafa',
            'surname' => 'arslan',
            'email' => 'mustafa@mail.com',
+           'group_id' => 1,
            'password' => Hash::make('1234'),
         ]);
     }
