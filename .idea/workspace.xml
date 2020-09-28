@@ -148,7 +148,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../prospectivy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lastsis" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -169,7 +169,7 @@
       <option name="presentableId" value="Default" />
       <updated>1600934391787</updated>
       <workItem from="1600934393480" duration="814000" />
-      <workItem from="1600935401791" duration="55552000" />
+      <workItem from="1600935401791" duration="86636000" />
     </task>
     <servers />
   </component>
@@ -177,29 +177,29 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2610" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601128353467">
+    <state x="2610" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601281529813">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2610" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601128353467" />
-    <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1600935427775">
+    <state x="2610" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601281529813" />
+    <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1601144504735">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600935427775" />
+    <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601144504735" />
     <state x="2681" y="166" key="SettingsEditor" timestamp="1601016220372">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2681" y="166" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601016220372" />
-    <state x="2576" y="252" width="607" height="536" key="find.popup" timestamp="1601035220400">
+    <state x="2576" y="252" width="607" height="536" key="find.popup" timestamp="1601216481512">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2576" y="252" width="607" height="536" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601035220400" />
+    <state x="2576" y="252" width="607" height="536" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601216481512" />
     <state x="2536" y="240" key="run.anything.popup" timestamp="1601118842209">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2536" y="240" key="run.anything.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601118842209" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1600973011092">
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1601281703930">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600973011092" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1601281703930" />
   </component>
 </project>

@@ -21,19 +21,19 @@ class LoginController extends APIController
      * @param  [string] password_confirmation
      * @return [string] message
      */
-    public function signup(Request $request)
+    public function signup(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string',
             'surname' => 'required|string',
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|unique:users|email:rfc,dns',
             'password' => 'required|string|confirmed'
         ]);
         $user = new User([
             'name' => $request->name,
             'surname' => $request->surname,
             'email' => $request->email,
-            'group_id' => 1,
+            'group_id' => 2,
             'password' => bcrypt($request->password)
         ]);
         $user->save();
@@ -52,10 +52,10 @@ class LoginController extends APIController
      * @return [string] token_type
      * @return [string] expires_at
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|email:rfc,dns',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
@@ -97,7 +97,7 @@ class LoginController extends APIController
      *
      * @return [json] user object
      */
-    public function user(Request $request)
+    public function user(Request $request): JsonResponse
     {
         return response()->json($request->user());
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,13 +17,6 @@ class ArticleResource extends JsonResource
      */
     public function toArray($request)
     {
-       /* $tags = $this->tags;
-
-        $tag_id = null;
-
-        foreach ($tags as $tag){
-           $tag_id = $tag->tag_id;
-        };*/
 
         return [
             "id" => $this->id,
@@ -37,7 +31,7 @@ class ArticleResource extends JsonResource
             "updated_at" => Carbon::parse($this->updated_at)->formatLocalized('%d %B %Y'),
             "tags" => $this->tags,
             "categories" => $this->categories,
-            "users" => $this->users
+            "user" => $this->users
 
         ];
     }

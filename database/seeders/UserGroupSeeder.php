@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserGroup extends Seeder
+class UserGroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,11 +26,6 @@ class UserGroup extends Seeder
                 'role' => 'yazar',
                 'description' => 'Blog Yazarı'
             ],
-            // abone
-            [
-                'role' => 'abone',
-                'description' => 'Blog Abonesi'
-            ]
         ];
 
         foreach ($groups as $group) {

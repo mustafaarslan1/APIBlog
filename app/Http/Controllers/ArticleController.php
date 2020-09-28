@@ -8,9 +8,13 @@ use App\Models\Article;
 use App\Models\ArticleCategory;
 use App\Models\ArticleTag;
 use App\Models\Category;
+use App\Models\Newsletter;
 use App\Models\Tag;
+use App\Notifications\NewArticleNotify;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -40,6 +44,7 @@ class ArticleController extends APIController
     public function add(Request $request): JsonResponse
     {
         $data = $this->request->all();
+        $user = Auth::user();
 
         $validator = Validator::make($data,[
            'title' => 'required|string|min:3|max:300',
@@ -74,7 +79,7 @@ class ArticleController extends APIController
             $article->is_active = 1;
         }
         $article->content = $data['content'];
-        $article->user_id = 1; //burası middlewareden sonra düzeltilecek
+        $article->user_id = $user->id;
 
         if ($request->hasFile('file')){
             $filename = uniqid().'.'.$request->file->getClientOriginalExtension();
@@ -120,6 +125,13 @@ class ArticleController extends APIController
             }
         }
 
+        //Mail göndermek için bu kodu blogunu aktifleştirmeniz gerekiyor.
+
+       /* $subscribers = Newsletter::all();
+        foreach ($subscribers as $subscriber){
+            Notification::route('mail', $subscriber->email)
+                ->notify(new NewArticleNotify($article));
+        }*/
 
 
         return $this->success([
@@ -131,6 +143,8 @@ class ArticleController extends APIController
     public function update(int $article_id, Request $request): JsonResponse
     {
         $data = $this->request->all();
+        $user = Auth::user();
+
 
         $validator = Validator::make($data,[
             'title' => 'string|min:3|max:300',
@@ -147,32 +161,32 @@ class ArticleController extends APIController
             ],400);
         }
 
-
-
         $article = Article::find($article_id);
 
+        $this->authorize('update', $article);
+            $article->update($data);
 
+            if (isset($data['title'])){
+                $slug = Str::slug($data['title']);
+                $this->authorize('update', $article);
+                $article->update([
+                    "slug" => $slug
+                ]);
+            }
 
-        $article->update($data);
+            if ($request->hasFile('file')){
+                $file_name=uniqid().'.'.$request->blog_file->getClientOriginalExtension();
+                $request->blog_file->move(public_path('uploads/articles'),$file_name);
+                $this->authorize('update', $article);
+                $article->update([
+                    "file" => $file_name,
+                ]);
+            }
 
-        if (isset($data['title'])){
-            $slug = Str::slug($data['title']);
-            $article->update([
-                "slug" => $slug
+            return $this->success([
+                'data' => $article
             ]);
-        }
 
-        if ($request->hasFile('file')){
-            $file_name=uniqid().'.'.$request->blog_file->getClientOriginalExtension();
-            $request->blog_file->move(public_path('uploads/articles'),$file_name);
-            $article->update([
-                "file" => $file_name,
-            ]);
-        }
-
-        return $this->success([
-            'data' => $article
-        ]);
     }
 
     public function detail(int $article_id): JsonResponse
@@ -187,6 +201,7 @@ class ArticleController extends APIController
     public function delete(int $article_id, Request $request): JsonResponse
     {
         $article = Article::find($article_id);
+        $this->authorize('delete', $article);
         $article->delete();
 
         return $this->success([
@@ -195,9 +210,10 @@ class ArticleController extends APIController
 
     }
 
-    public function addTag()
+    public function addTag(): JsonResponse
     {
         $data = $this->request->all();
+
         foreach ($data['tags'] as $t) {
             $find = Tag::where('title', $t)->first();
             if ($find){
@@ -209,17 +225,19 @@ class ArticleController extends APIController
             $tag->save();
 
             $add_tag_to_article = new ArticleTag();
-            $add_tag_to_article->article_id = $data['article_id'];
-            $add_tag_to_article->tag_id = $tag->id;
-            $add_tag_to_article->save();
+
+                $add_tag_to_article->article_id = $data['article_id'];
+                $add_tag_to_article->tag_id = $tag->id;
+                $add_tag_to_article->save();
         }
 
         return $this->success([
             'data' => $data
         ]);
+
     }
 
-    public function deleteTag($article_tag_id)
+    public function deleteTag($article_tag_id): JsonResponse
     {
         $deleteTag = ArticleTag::find($article_tag_id);
         $deleteTag->delete();
@@ -231,7 +249,7 @@ class ArticleController extends APIController
         ]);
     }
 
-    public function addCategory()
+    public function addCategory(): JsonResponse
     {
         $data = $this->request->all();
         foreach ($data['categories'] as $c) {
@@ -255,7 +273,7 @@ class ArticleController extends APIController
         ]);
     }
 
-    public function deleteCategory($article_category_id)
+    public function deleteCategory($article_category_id): JsonResponse
     {
         $deleteCategory = ArticleCategory::find($article_category_id);
         $deleteCategory->delete();
@@ -266,4 +284,5 @@ class ArticleController extends APIController
             'data' => $data
         ]);
     }
+
 }

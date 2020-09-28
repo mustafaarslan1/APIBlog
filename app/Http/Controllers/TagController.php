@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TagController extends APIController
@@ -19,14 +21,13 @@ class TagController extends APIController
 
     public function index(Request $request): JsonResponse
     {
-        $data = Tag::withCount('articles')->get();
+        $data = Tag::with(['categories','articles'])->withCount(['articles','categories'])->get();
 
-        //Resourcedan geçirilecek
+        $data = TagResource::collection($data);
 
         return $this->success([
             'data' => $data
         ]);
-
     }
 
     public function add(Request $request): JsonResponse

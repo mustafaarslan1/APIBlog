@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -43,4 +44,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function articles(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
+    public function is_admin(): bool
+    {
+        if ($this->group_id==1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function is_author(): bool
+    {
+        if ($this->group_id==2 || $this->group_id==1) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
 }

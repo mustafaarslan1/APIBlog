@@ -24,7 +24,7 @@ class CategoryController extends APIController
 
     public function index(Request $request): JsonResponse
     {
-        $data = Category::with(['tags','articles'])->withCount('articles')->get();
+        $data = Category::with(['tags','articles'])->withCount(['articles','tags'])->get();
 
         $data = CategoryResource::collection($data);
 
@@ -79,7 +79,7 @@ class CategoryController extends APIController
 
     public function update(int $category_id, Request $request): JsonResponse
     {
-        $data = $this->request->only('title');
+        $data = $this->request->all();
 
         $validator = Validator::make($data, [
             'title' => 'required|string|min:2|max:100|unique:categories,title'
@@ -120,7 +120,7 @@ class CategoryController extends APIController
 
     }
 
-    public function addTag()
+    public function addTag(): JsonResponse
     {
         $data = $this->request->all();
         foreach ($data['tags'] as $t) {
@@ -144,7 +144,7 @@ class CategoryController extends APIController
         ]);
     }
 
-    public function deleteTag($category_tag_id)
+    public function deleteTag($category_tag_id): JsonResponse
     {
         $deleteTag = CategoryTag::find($category_tag_id);
         $deleteTag->delete();

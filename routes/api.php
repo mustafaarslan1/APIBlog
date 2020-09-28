@@ -36,36 +36,44 @@ Route::group([
 Route::namespace('App\Http\Controllers')->group(function (){
     Route::prefix('categories')->group(function (){
         Route::get('/', 'CategoryController@index');
-        Route::get('/{category-id}', 'CategoryController@detail');
-        Route::post('/add', 'CategoryController@add');
-        Route::put('/{category-id}', 'CategoryController@update');
-        Route::delete('/{category-id}', 'CategoryController@delete');
-        Route::post('/add-tag', 'CategoryController@addTag');
-        Route::delete('/delete-tag/{category-tag-id}', 'CategoryController@deleteTag');
+        Route::get('/{categoryid}', 'CategoryController@detail');
+        Route::post('/add', 'CategoryController@add')->middleware(['auth:api','checkAuthor']);
+        Route::put('/{categoryid}', 'CategoryController@update')->middleware(['auth:api','checkAuthor']);
+        Route::delete('/{categoryid}', 'CategoryController@delete')->middleware(['auth:api','checkAuthor']);
+        Route::post('/add-tag', 'CategoryController@addTag')->middleware(['auth:api','checkAuthor']);
+        Route::delete('/delete-tag/{categorytagid}', 'CategoryController@deleteTag')->middleware(['auth:api','checkAuthor']);
     });
 });
 
 Route::namespace('App\Http\Controllers')->group(function (){
     Route::prefix('tags')->group(function (){
         Route::get('/', 'TagController@index');
-        Route::get('/{tag-id}', 'TagController@detail');
-        Route::post('/add', 'TagController@add');
-        Route::put('/{tag-id}', 'TagController@update');
-        Route::delete('/{tag-id}', 'TagController@delete');
+        Route::get('/{tagid}', 'TagController@detail');
+        Route::post('/add', 'TagController@add')->middleware(['auth:api','checkAuthor']);
+        Route::put('/{tagid}', 'TagController@update')->middleware(['auth:api','checkAuthor']);
+        Route::delete('/{tagid}', 'TagController@delete')->middleware(['auth:api','checkAuthor']);
     });
 });
 
 Route::namespace('App\Http\Controllers')->group(function (){
     Route::prefix('articles')->group(function (){
         Route::get('/', 'ArticleController@index');
-        Route::get('/{article-id}', 'ArticleController@detail');
-        Route::post('/add', 'ArticleController@add');
-        Route::put('/{article-id}', 'ArticleController@update');
-        Route::delete('/{article-id}', 'ArticleController@delete');
-        Route::post('/add-tag', 'ArticleController@addTag');
-        Route::delete('/delete-tag/{article-tag-id}', 'ArticleController@deleteTag');
-        Route::post('/add-category', 'ArticleController@addCategory');
-        Route::delete('/delete-category/{article-category-id}', 'ArticleController@deleteCategory');
+        Route::get('/{articleid}', 'ArticleController@detail');
+        Route::post('/add', 'ArticleController@add')->middleware(['auth:api','checkAuthor']);
+        Route::put('/{articleid}', 'ArticleController@update')->middleware(['auth:api','checkAuthor']);
+        Route::delete('/{articleid}', 'ArticleController@delete')->middleware(['auth:api','checkAuthor']);
+        Route::post('/add-tag', 'ArticleController@addTag')->middleware(['auth:api','checkAuthor']);
+        Route::delete('/delete-tag/{articletagid}', 'ArticleController@deleteTag')->middleware(['auth:api','checkAuthor']);
+        Route::post('/add-category', 'ArticleController@addCategory')->middleware(['auth:api','checkAuthor']);
+        Route::delete('/delete-category/{articlecategoryid}', 'ArticleController@deleteCategory')->middleware(['auth:api','checkAuthor']);
+    });
+});
+
+Route::namespace('App\Http\Controllers')->group(function (){
+    Route::prefix('newsletter')->group(function (){
+        Route::get('/', 'NewsletterController@index')->middleware(['auth:api','checkAdmin']);
+        Route::post('/add', 'NewsletterController@add');
+        Route::put('/update/{newsletterid}', 'NewsletterController@disable');
     });
 });
 
