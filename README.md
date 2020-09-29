@@ -15,7 +15,7 @@ Projenin akış diyagramını görüntülemek için, aşağıdaki linki verilen 
 
 <h5>3 Uygulama</h5>
 <p>
-Proje REST Api ile çalışan bir blog uygulamasıdır. Proje kabaca, kullanıcılar, makaleler, kategoriler, etiketler ve abonelik sisteminden oluşmakta.
+Proje REST Api ile çalışan bir blog uygulamasıdır. Proje, kullanıcılar, makaleler, kategoriler, etiketler ve abonelik sisteminden oluşmakta.
 </p>
 <p>
 Hem makaleler hem de kategoriler birden fazla etikete sahip olabilecek şekilde geliştirildi.
